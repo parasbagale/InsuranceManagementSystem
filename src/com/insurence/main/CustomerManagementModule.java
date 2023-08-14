@@ -15,14 +15,14 @@ public class CustomerManagementModule extends Customer {
     private static Integer getUniqueId() {
         Integer randomId = generateRandomId();
 
-        while (customersInfo.containsKey(randomId)) {
+        while (idExists(randomId)) {
             randomId = generateRandomId();
         }
 
         return randomId;
     }
 
-    private boolean idExists(Integer random) {
+    private static boolean idExists(Integer random) {
         return customersInfo.containsKey(random);
     }
 
@@ -47,8 +47,7 @@ public class CustomerManagementModule extends Customer {
 
         System.out.println("Enter Address (0000 st-address, city, STATE-CODE zip-code, country): ");
         String strAddress = scanner.nextLine();
-        Address customerAddress = new Address(); //
-        customerAddress.createAddress(strAddress); // ??
+        Address customerAddress = new Address(strAddress); //
 
         System.out.println("Enter email: ");
         String email = scanner.nextLine();
@@ -65,15 +64,55 @@ public class CustomerManagementModule extends Customer {
                 customerMobileNumber
         );
         saveCustomer(newCustomer);
-        System.out.println("Customer " + newCustomer.getFirstName() + " successfully created");
+    }
+
+    public static void createAuto() {
+        String firstName = "Testa";
+        String middleName = "T.";
+        String lastName = "Test";
+        String customerDob = "1998-08-28";
+        Address address = new Address("12 King St., Toronto, ON L8V1G3, Canada");
+        String email = "test@test.com";
+        String customerMobileNumber = "9849598495";
+        for(int i=0; i<10; i++) {
+            Customer cust = new Customer(
+                    firstName,
+                    middleName,
+                    lastName,
+                    customerDob,
+                    address,
+                    email,
+                    customerMobileNumber);
+            CustomerManagementModule.saveCustomer(cust);
+        }
     }
 
     /**
      * Saves customer
      * */
     public static void saveCustomer(Customer customer){
-        customersInfo.put(getUniqueId(), customer);
+        customer.setCustomerId(getUniqueId());
+        customersInfo.put(customer.getCustomerId(), customer);
         System.out.println("Customer created successfully.");
+    }
+
+    // Search Customer
+    public static Customer searchCustomer(Integer id) {
+        if(idExists(id)) {
+            System.out.println("Customer Found");
+            return (customersInfo.get(id));
+        }
+        return null;
+    }
+
+    public static Customer searchCustomer(String firstName) {
+        for(Integer key : customersInfo.keySet()) {
+            if (customersInfo.get(key).getFirstName().equals(firstName)) {
+                System.out.println("Customer Found");
+                return (customersInfo.get(key));
+            }
+        }
+        return null;
     }
 
     /**
@@ -85,17 +124,13 @@ public class CustomerManagementModule extends Customer {
             System.out.println("Customer successfully deleted.");
         }
         else
-            System.out.println("Customer couldn't be found with that id.");
+            System.out.println("Customer " + id + " couldn't be found.");
     }
 
-
-    // print allCustomer
+    // printall Customers
     public  static void printAllCustomers() {
         for (Integer key : customersInfo.keySet()) {
-            System.out.println("Customer ID: " + key);
+            System.out.println(customersInfo.get(key));
         }
     }
-
-
-
 }
