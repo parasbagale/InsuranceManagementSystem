@@ -70,7 +70,8 @@ public class CustomerManagementModule extends Customer {
      * Saves customer
      * */
     public static void saveCustomer(Customer customer){
-        customersInfo.put(getUniqueId(), customer);
+        customer.setCustomerId(getUniqueId());
+        customersInfo.put(customer.getCustomerId(), customer);
         System.out.println("Customer created successfully.");
     }
 
