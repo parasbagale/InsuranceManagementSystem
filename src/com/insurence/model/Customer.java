@@ -95,7 +95,8 @@ public class Customer extends Address {
     @Override
     public String toString() {
         // TODO - check for middlename
-        return ("Name: " + this.getFirstName() + this.middleName + this.lastName + "\n" +
+        return ("ID: " + this.customerId + "\n" +
+                "Name: " + this.getFirstName() + this.middleName + this.lastName + "\n" +
                 "DOB: " + this.getCustomerDob() + "\n" +
                 "Address: " + this.address + "\n" +
                 "Email: " + this.email + "\n" +
