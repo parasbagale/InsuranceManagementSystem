@@ -25,13 +25,13 @@ public class Customer extends Address {
     public Customer() {}
 
     public Customer(
-                    String firstName,
-                    String middleName,
-                    String lastName,
-                    String customerDob,
-                    Address address,
-                    String email,
-                    String customerMobileNumber) {
+            String firstName,
+            String middleName,
+            String lastName,
+            String customerDob,
+            Address address,
+            String email,
+            String customerMobileNumber) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -91,5 +91,14 @@ public class Customer extends Address {
     }
     public void setCustomerMobileNumber(String customerMobileNumber) {
         this.customerMobileNumber = customerMobileNumber;
+    }
+    @Override
+    public String toString() {
+        // TODO - check for middlename
+        return ("Name: " + this.getFirstName() + this.middleName + this.lastName + "\n" +
+                "DOB: " + this.getCustomerDob() + "\n" +
+                "Address: " + this.address + "\n" +
+                "Email: " + this.email + "\n" +
+                "Mobile: " + this.customerMobileNumber);
     }
 }

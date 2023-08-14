@@ -15,14 +15,14 @@ public class CustomerManagementModule extends Customer {
     private static Integer getUniqueId() {
         Integer randomId = generateRandomId();
 
-        while (customersInfo.containsKey(randomId)) {
+        while (idExists(randomId)) {
             randomId = generateRandomId();
         }
 
         return randomId;
     }
 
-    private boolean idExists(Integer random) {
+    private static boolean idExists(Integer random) {
         return customersInfo.containsKey(random);
     }
 
@@ -47,8 +47,7 @@ public class CustomerManagementModule extends Customer {
 
         System.out.println("Enter Address (0000 st-address, city, STATE-CODE zip-code, country): ");
         String strAddress = scanner.nextLine();
-        Address customerAddress = new Address(); //
-        customerAddress.createAddress(strAddress); // ??
+        Address customerAddress = new Address(strAddress); //
 
         System.out.println("Enter email: ");
         String email = scanner.nextLine();
@@ -65,7 +64,6 @@ public class CustomerManagementModule extends Customer {
                 customerMobileNumber
         );
         saveCustomer(newCustomer);
-        System.out.println("Customer " + newCustomer.getFirstName() + " successfully created");
     }
 
     /**
@@ -74,6 +72,17 @@ public class CustomerManagementModule extends Customer {
     public static void saveCustomer(Customer customer){
         customersInfo.put(getUniqueId(), customer);
         System.out.println("Customer created successfully.");
+    }
+
+    // Search Customer
+    public static void searchCustomer(Integer id) {
+        if(idExists(id)) {
+            System.out.println("Customer Found");
+            System.out.println(customersInfo.get(id));
+        }
+        else {
+            System.out.println("No results found");
+        }
     }
 
     /**
@@ -85,17 +94,13 @@ public class CustomerManagementModule extends Customer {
             System.out.println("Customer successfully deleted.");
         }
         else
-            System.out.println("Customer couldn't be found with that id.");
+            System.out.println("Customer " + id + " couldn't be found.");
     }
 
-
-    // print allCustomer
+    // printall Customers
     public  static void printAllCustomers() {
         for (Integer key : customersInfo.keySet()) {
-            System.out.println("Customer ID: " + key);
+            System.out.println(customersInfo.get(key));
         }
     }
-
-
-
 }
