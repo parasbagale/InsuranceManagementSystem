@@ -66,6 +66,27 @@ public class CustomerManagementModule extends Customer {
         saveCustomer(newCustomer);
     }
 
+    public static void createAuto() {
+        String firstName = "Testa";
+        String middleName = "T.";
+        String lastName = "Test";
+        String customerDob = "1998-08-28";
+        Address address = new Address("12 King St., Toronto, ON L8V1G3, Canada");
+        String email = "test@test.com";
+        String customerMobileNumber = "9849598495";
+        for(int i=0; i<10; i++) {
+            Customer cust = new Customer(
+                    firstName,
+                    middleName,
+                    lastName,
+                    customerDob,
+                    address,
+                    email,
+                    customerMobileNumber);
+            CustomerManagementModule.saveCustomer(cust);
+        }
+    }
+
     /**
      * Saves customer
      * */
@@ -76,14 +97,22 @@ public class CustomerManagementModule extends Customer {
     }
 
     // Search Customer
-    public static void searchCustomer(Integer id) {
+    public static Customer searchCustomer(Integer id) {
         if(idExists(id)) {
             System.out.println("Customer Found");
-            System.out.println(customersInfo.get(id));
+            return (customersInfo.get(id));
         }
-        else {
-            System.out.println("No results found");
+        return null;
+    }
+
+    public static Customer searchCustomer(String firstName) {
+        for(Integer key : customersInfo.keySet()) {
+            if (customersInfo.get(key).getFirstName().equals(firstName)) {
+                System.out.println("Customer Found");
+                return (customersInfo.get(key));
+            }
         }
+        return null;
     }
 
     /**
