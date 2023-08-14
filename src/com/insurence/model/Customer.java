@@ -96,7 +96,7 @@ public class Customer extends Address {
     public String toString() {
         // TODO - check for middlename
         return ("ID: " + this.customerId + "\n" +
-                "Name: " + this.getFirstName() + this.middleName + this.lastName + "\n" +
+                "Name: " + this.getFirstName() + " " + this.middleName + " " + this.lastName + "\n" +
                 "DOB: " + this.getCustomerDob() + "\n" +
                 "Address: " + this.address + "\n" +
                 "Email: " + this.email + "\n" +
