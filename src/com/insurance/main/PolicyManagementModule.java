@@ -1,7 +1,8 @@
-package com.insurence.main;
+package com.insurance.main;
 
+import com.insurance.model.Customer;
 import com.insurence.model.Policy;
-import com.insurence.model.Customer;
+
 
 import java.time.LocalDate;
 import java.util.*;
