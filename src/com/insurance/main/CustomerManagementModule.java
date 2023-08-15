@@ -1,13 +1,13 @@
-package com.insurence.main; // ?? adjusted spelling of insurance to remote repo
+package com.insurance.main;
 
-import com.insurence.model.Address;
-import com.insurence.model.Customer;
+import com.insurance.model.Address;
+import com.insurance.model.Customer;
 
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-public class CustomerManagementModule extends Customer {
+public class CustomerManagementModule {
 
     // create map
     static HashMap<Integer, Customer> customersInfo = new HashMap<>();
@@ -36,13 +36,15 @@ public class CustomerManagementModule extends Customer {
 
     public static void createCustomer(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter customer first name: ");
+        System.out.println("Enter customer's first name: ");
         String firstName = scanner.nextLine();
-        System.out.println("Enter customer middle name: ");
+        System.out.println("Enter customer's middle name: ");
         String middleName = scanner.nextLine();
-        System.out.println("Enter customer lastname: ");
+        System.out.println("Enter customer's lastname: ");
         String lastName = scanner.nextLine();
-        System.out.println("Enter customer date of birth (MM-DD-YYYY): ");
+        System.out.println("Enter customer's password: ");
+        String password = scanner.nextLine();
+        System.out.println("Enter customer's date of birth (MM-DD-YYYY): ");
         String customerDob = scanner.nextLine();
 
         System.out.println("Enter Address (0000 st-address, city, STATE-CODE zip-code, country): ");
@@ -58,6 +60,7 @@ public class CustomerManagementModule extends Customer {
                 firstName,
                 middleName,
                 lastName,
+                password,
                 customerDob,
                 customerAddress,   // address object
                 email,
@@ -70,6 +73,7 @@ public class CustomerManagementModule extends Customer {
         String firstName = "Testa";
         String middleName = "T.";
         String lastName = "Test";
+        String password = "test123";
         String customerDob = "1998-08-28";
         Address address = new Address("12 King St., Toronto, ON L8V1G3, Canada");
         String email = "test@test.com";
@@ -79,6 +83,7 @@ public class CustomerManagementModule extends Customer {
                     firstName,
                     middleName,
                     lastName,
+                    password,
                     customerDob,
                     address,
                     email,
@@ -92,8 +97,82 @@ public class CustomerManagementModule extends Customer {
      * */
     public static void saveCustomer(Customer customer){
         customer.setCustomerId(getUniqueId());
-        customersInfo.put(customer.getCustomerId(), customer);
-        System.out.println("Customer created successfully.");
+
+        if(!idExists(customer.getCustomerId())) {
+            customersInfo.put(customer.getCustomerId(), customer);
+            System.out.println("Customer created successfully.");
+        }
+        else {
+            System.out.println("Something went wrong");
+        }
+    }
+    public static void saveCustomer(Customer customer, Integer id){
+        customer.setCustomerId(id);
+
+        if(idExists(customer.getCustomerId())) {
+            customersInfo.put(customer.getCustomerId(), customer);
+            System.out.println("Customer created successfully.");
+        }
+        else {
+            System.out.println("Something went wrong");
+        }
+    }
+
+    // Update customer
+    public static void updateCustomer(Integer id) {
+        if(idExists(id)) {
+            Customer cust = customersInfo.get(id);
+            System.out.println("Enter what field you want to update from the options below:");
+            System.out.println("firstname, middlename, lastname, password, dob, address, email, mobilenumber?");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine().toLowerCase().trim();
+            boolean hasUpdated = true;
+            switch (input) {
+                case "firstname":
+                    System.out.println("Enter new firstName: ");
+                    cust.setFirstName(scanner.nextLine());
+                    break;
+                case "middlename":
+                    System.out.println("Enter new middleName: ");
+                    cust.setMiddleName(scanner.nextLine());
+                    break;
+                case "lastname":
+                    System.out.println("Enter new lastName: ");
+                    cust.setLastName(scanner.nextLine());
+                    break;
+                case "password":
+                    System.out.println("Enter new password: ");
+                    cust.setPassword(scanner.nextLine());
+                    break;
+                case "dob":
+                    System.out.println("Enter new DOB: ");
+                    cust.setCustomerDob(scanner.nextLine());
+                    break;
+                case "address":
+                    System.out.println("Enter new address: ");
+                    cust.setAddress(new Address(scanner.nextLine()));
+                    break;
+                case "email":
+                    System.out.println("Enter new email: ");
+                    cust.setEmail(scanner.nextLine());
+                    break;
+                case "mobilenumber":
+                    System.out.println("Enter new mobileNumber: ");
+                    cust.setCustomerMobileNumber(scanner.nextLine());
+                    break;
+                default:
+                    hasUpdated = false;
+                    System.out.println("Invalid input");
+            }
+            if (hasUpdated) {
+                System.out.println("Update successful!");
+                System.out.println("Update Information:");
+                System.out.println(cust);
+            }
+        }
+        else {
+            System.out.println("No customer found!");
+        }
     }
 
     // Search Customer
