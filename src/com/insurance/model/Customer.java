@@ -1,4 +1,4 @@
-package com.insurence.model;
+package com.insurance.model;
 
 public class Customer extends Address {
 
@@ -16,6 +16,7 @@ public class Customer extends Address {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String password;
     private String customerDob;
     private Address address;
     private String email;
@@ -28,6 +29,7 @@ public class Customer extends Address {
             String firstName,
             String middleName,
             String lastName,
+            String password,
             String customerDob,
             Address address,
             String email,
@@ -35,6 +37,7 @@ public class Customer extends Address {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.password = password;
         this.customerDob = customerDob;
         this.address = address;
         this.email = email;
@@ -54,6 +57,9 @@ public class Customer extends Address {
     public String getLastName() {
         return lastName;
     }
+
+    public String getPassword() { return password; }
+
     public String getCustomerDob() {
         return customerDob;
     }
@@ -80,6 +86,9 @@ public class Customer extends Address {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setPassword(String password) { this.password = password; }
+
     public void setCustomerDob(String customerDob) {
         this.customerDob = customerDob;
     }
