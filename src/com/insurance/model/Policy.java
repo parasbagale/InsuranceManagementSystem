@@ -1,4 +1,4 @@
-package com.insurance.model;
+package com.insurence.model;
 
 import java.util.UUID;
 
