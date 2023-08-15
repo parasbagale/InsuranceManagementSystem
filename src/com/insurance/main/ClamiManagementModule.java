@@ -1,4 +1,4 @@
-package com.insurence.main;
+package com.insurance.main;
 
 public class ClaimManagementModule {
 }
