@@ -1,7 +1,7 @@
-package com.insurence.main; // ?? adjusted spelling of insurance to remote repo
+package com.insurance.main; // ?? adjusted spelling of insurance to remote repo
 
-import com.insurence.model.Address;
-import com.insurence.model.Customer;
+import com.insurance.model.Address;
+import com.insurance.model.Customer;
 
 import java.util.HashMap;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package com.insurence.model;
+package com.insurance.model;
 
 public class Claim {
     private int claimId;
