@@ -1,16 +1,17 @@
-package com.insurance.main;
+package com.insurence.main;
 
-import com.insurance.model.Policy;
+import com.insurence.model.Policy;
+import com.insurence.model.Customer;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.*;
 
 public class PolicyManagementModule {
 
     //create, update, delete , search policy
-     static Map<String, Policy> policyMap = new HashMap<>();
+    static Map<String, Policy> policyMap = new HashMap<>();
     static Scanner s= new Scanner(System.in);
+    static HashMap<Integer, Customer> customerMap = new HashMap<>();
 
 
      //Policy p1 = new Policy(101,"1011","Health Insurance",50000.0,50.0,"2022-10-10","2023-10-10","Active",true);
@@ -25,32 +26,37 @@ public class PolicyManagementModule {
         System.out.println("3. Delete a Policy. Please enter 3 to delete an existing policy");
         System.out.println("4. Search a Policy. Please enter 4 to search an existing policy");
     }
-    public static void CreatePolicy(){
+    public static void createPolicy(){
         System.out.println("Let us create a policy for you. Please provide your details: ");
         System.out.println("Enter customerId: ");
         int customerId = s.nextInt();
-        //verify the customerId is valid??  verifyCustomer(Id); Deepak
-        System.out.println("Please enter a policy type (Health or Home): ");
-        String pType = s.next();
+        //verify the customerId
+        if(verifyCustomer(customerId) == true) {
+            System.out.println("Please enter a policy type (Health or Home): ");
+            String pType = s.next();
 
-        if("Health".equalsIgnoreCase(pType) || "Home".equalsIgnoreCase(pType)){
-            //add new policy for a customer
-            String newPolicyId = addPolicy(customerId, pType);
-            if(newPolicyId != null ){
-                System.out.println("Great! The new " + pType + " insurance policy has been created for you. Your policy id is: " + newPolicyId);
+            if ("Health".equalsIgnoreCase(pType) || "Home".equalsIgnoreCase(pType)) {
+                //add new policy for a customer
+                String newPolicyId = addPolicy(customerId, pType);
+                if (newPolicyId != null) {
+                    System.out.println("Great! The new " + pType + " insurance policy has been created for you. Your policy id is: " + newPolicyId);
+                }
+            } else {
+                System.out.println("Please enter the correct policy type.");
             }
         }else{
-            System.out.println("Please enter the correct policy type.");
+            System.out.println("Sorry! Customer does not exist.");
         }
     }
-    public static boolean verifyCustomer(int Id){
-        //get all ids of customer  Question to Deepak?
-        //loop through it to find this id
-        //if found return true
-        //else false
-
-        return true;
+    public static boolean verifyCustomer(int id){
+        boolean found = false;
+        if (customerMap.containsKey(id)){
+          found = true;
+        }
+        return found;
     }
+
+
     public static String addPolicy(int customerId, String pType){
 
         double coverageAmt, premiumAmt;
@@ -114,12 +120,12 @@ public class PolicyManagementModule {
             System.out.println("Policy status updated to active.");
         }
     }
-    public static void DeletePolicy(String policyId){
+    public static void deletePolicy(String policyId){
         Policy currentPolicy = policyMap.get(policyId);
         policyMap.remove(policyId);
         System.out.println(policyId + " has been successfully removed from the system.");
     }
-    public static void SearchPolicy(String policyId){
+    public static void searchPolicy(String policyId){
         boolean found = false;
         for(Map.Entry<String, Policy> entry : policyMap.entrySet()){
             if( entry.getKey().equals(policyId)){
