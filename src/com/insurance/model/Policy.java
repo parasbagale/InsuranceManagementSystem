@@ -1,10 +1,11 @@
-package com.insurence.model;
+package com.insurance.model;
 
 import java.util.UUID;
 
 public class Policy {
   private String policyId;
-  private String customerId;
+  private int customerId;
+
   private String policyType;
   private double coverageAmount;
   private double premiumAmount;
@@ -13,7 +14,7 @@ public class Policy {
   private String status;
   private boolean isClaimed;
 
-    public Policy(String customerId, String policyType, double coverageAmount,
+    public Policy(int customerId, String policyType, double coverageAmount,
                   double premiumAmount, String startDate, String endDate, String status, boolean isClaimed) {
         this.policyId = String.valueOf(UUID.randomUUID()) ;
         this.customerId = customerId;
@@ -34,11 +35,11 @@ public class Policy {
         this.policyId = policyId;
     }
 
-    public String getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
