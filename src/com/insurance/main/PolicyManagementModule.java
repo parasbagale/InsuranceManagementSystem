@@ -100,16 +100,24 @@ public class PolicyManagementModule {
     }
 
     public static void showPolicyInfo(String id){
-        Policy currentPolicy = policyMap.get(id);
-        System.out.println("Your policy details: \n");
-        System.out.println("CustomerId: " + currentPolicy.getCustomerId());
-        System.out.println("Policy Type: " + currentPolicy.getPolicyType());
-        System.out.println("Coverage: " + currentPolicy.getCoverageAmount());
-        System.out.println("Monthly Premium: " + currentPolicy.getPremiumAmount());
-        System.out.println("Start date: " + currentPolicy.getStartDate());
-        System.out.println("End date: " + currentPolicy.getEndDate());
-        System.out.println("Policy status: " + currentPolicy.getStatus());
-        System.out.println("Claim status: " + currentPolicy.isClaimed());
+        if(id != null) {
+            Policy currentPolicy = policyMap.get(id);
+            if(currentPolicy != null) {
+                System.out.println("Your policy details: \n");
+                System.out.println("CustomerId: " + currentPolicy.getCustomerId());
+                System.out.println("Policy Type: " + currentPolicy.getPolicyType());
+                System.out.println("Coverage: " + currentPolicy.getCoverageAmount());
+                System.out.println("Monthly Premium: " + currentPolicy.getPremiumAmount());
+                System.out.println("Start date: " + currentPolicy.getStartDate());
+                System.out.println("End date: " + currentPolicy.getEndDate());
+                System.out.println("Policy status: " + currentPolicy.getStatus());
+                System.out.println("Claim status: " + currentPolicy.isClaimed());
+            }else{
+                System.out.println("Policy id is not in the system.");
+            }
+        }else{
+            System.out.println(("Policy id you entered is null"));
+        }
     }
     public static void updatePolicyStatus(String policyId){
         Policy currentPolicy = policyMap.get(policyId);
