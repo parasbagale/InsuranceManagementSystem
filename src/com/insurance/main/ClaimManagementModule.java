@@ -2,7 +2,7 @@ package com.insurance.main;
 
 import com.insurance.model.Claim;
 import com.insurance.model.Customer;
-import com.insurence.model.Policy;
+import com.insurance.model.Policy;
 
 import java.sql.Timestamp;
 import java.util.*;

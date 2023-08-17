@@ -80,10 +80,10 @@ public class CustomerManagementModule {
         String customerMobileNumber = "9849598495";
         for(int i=0; i<10; i++) {
             Customer cust = new Customer(
-                    firstName,
-                    middleName,
-                    lastName,
-                    password,
+                    firstName+i+1,
+                    middleName+i+1,
+                    lastName+i+1,
+                    password+i+1,
                     customerDob,
                     address,
                     email,

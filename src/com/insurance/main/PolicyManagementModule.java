@@ -1,7 +1,7 @@
 package com.insurance.main;
 
 import com.insurance.model.Customer;
-import com.insurence.model.Policy;
+import com.insurance.model.Policy;
 
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ public class PolicyManagementModule {
     //create, update, delete , search policy
     static Map<String, Policy> policyMap = new HashMap<>();
     static Scanner s= new Scanner(System.in);
-    static HashMap<Integer, Customer> customerMap = new HashMap<>();
+    //static HashMap<Integer, Customer> customerMap = new HashMap<>();
 
 
      //Policy p1 = new Policy(101,"1011","Health Insurance",50000.0,50.0,"2022-10-10","2023-10-10","Active",true);
@@ -50,11 +50,12 @@ public class PolicyManagementModule {
         }
     }
     public static boolean verifyCustomer(int id){
-        boolean found = false;
-        if (customerMap.containsKey(id)){
-          found = true;
-        }
-        return found;
+        Customer cust = CustomerManagementModule.searchCustomer(id);
+       if (cust != null){
+           return true;
+       }
+       return false;
+
     }
 
 
@@ -79,7 +80,7 @@ public class PolicyManagementModule {
         }
 
         //create a policy object
-        Policy newPolicy = new Policy("1001", pType, coverageAmt,premiumAmt,startDate, endDate, "Active", true);
+        Policy newPolicy = new Policy(customerId, pType, coverageAmt,premiumAmt,startDate, endDate, "Active", false);
 
         //store it in hashmap
         policyMap.put(newPolicy.getPolicyId(), newPolicy);
@@ -99,16 +100,24 @@ public class PolicyManagementModule {
     }
 
     public static void showPolicyInfo(String id){
-        Policy currentPolicy = policyMap.get(id);
-        System.out.println("Your policy details: \n");
-        System.out.println("CustomerId: " + currentPolicy.getCustomerId());
-        System.out.println("Policy Type: " + currentPolicy.getPolicyType());
-        System.out.println("Coverage: " + currentPolicy.getCoverageAmount());
-        System.out.println("Monthly Premium: " + currentPolicy.getPremiumAmount());
-        System.out.println("Start date: " + currentPolicy.getStartDate());
-        System.out.println("End date: " + currentPolicy.getEndDate());
-        System.out.println("Policy status: " + currentPolicy.getStatus());
-        System.out.println("Claim status: " + currentPolicy.isClaimed());
+        if(id != null) {
+            Policy currentPolicy = policyMap.get(id);
+            if(currentPolicy != null) {
+                System.out.println("Your policy details: \n");
+                System.out.println("CustomerId: " + currentPolicy.getCustomerId());
+                System.out.println("Policy Type: " + currentPolicy.getPolicyType());
+                System.out.println("Coverage: " + currentPolicy.getCoverageAmount());
+                System.out.println("Monthly Premium: " + currentPolicy.getPremiumAmount());
+                System.out.println("Start date: " + currentPolicy.getStartDate());
+                System.out.println("End date: " + currentPolicy.getEndDate());
+                System.out.println("Policy status: " + currentPolicy.getStatus());
+                System.out.println("Claim status: " + currentPolicy.isClaimed());
+            }else{
+                System.out.println("Policy id is not in the system.");
+            }
+        }else{
+            System.out.println(("Policy id you entered is null"));
+        }
     }
     public static void updatePolicyStatus(String policyId){
         Policy currentPolicy = policyMap.get(policyId);
@@ -126,19 +135,16 @@ public class PolicyManagementModule {
         policyMap.remove(policyId);
         System.out.println(policyId + " has been successfully removed from the system.");
     }
-    public static void searchPolicy(String policyId){
-        boolean found = false;
+    public static Policy searchPolicy(String policyId){
+
         for(Map.Entry<String, Policy> entry : policyMap.entrySet()){
             if( entry.getKey().equals(policyId)){
-                found = true;
+
                 showPolicyInfo(policyId);
-                break;
+               return entry.getValue();
             }
         }
-
-        if(!found){
-            System.out.println("Sorry, policy not found!");
-        }
+        return null;
     }
     public static Map<String, Policy> displayData(){
         return policyMap;
